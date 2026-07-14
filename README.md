@@ -1,23 +1,48 @@
 # Math Collective
 
-**A multi-tenant competitive mathematics + open-source-discovery platform for university students.**
+A competitive mathematics platform for universities. Students solve AI-generated challenges,
+compete in live quizzes, check into events by QR code, earn XP and climb leaderboards.
 
-React 19 + Vite 7 frontend, Express 5 + Supabase backend, Three.js for the 3D homepage,
-Socket.IO for live quiz + real-time chat. AI-assisted challenge generation, an
-auth-gated catalogue of 365+ real-world problem statements (SIH / GSoC / Kaggle / MLH /
-open-source), community-authored learning roadmaps, shareable public portfolios, and a
-monument-themed visual system. XP gamification + end-to-end encrypted messaging round
-out the social layer.
+**Live: [math-collective.onrender.com](https://math-collective.onrender.com)** · [uptime](https://stats.uptimerobot.com/lT3HeIUX4q)
 
-🔗 **Live:** <https://math-collective.onrender.com>
-🟢 **Status:** <https://stats.uptimerobot.com/lT3HeIUX4q>
+React 19 + Vite 7 on the front, Express 5 + Supabase behind it, Socket.IO driving the realtime
+quiz engine, Three.js for the homepage. 1,195 tests across 90 files; CI runs lint, typecheck, a
+coverage gate, the build, and Playwright end-to-end before anything merges.
 
-> **Status:** 1195 tests passing across 90 files · 0 ESLint issues · production build < 20s
+<!-- SCREENSHOTS — add these four PNGs to docs/screenshots/, then delete this comment
+     and uncomment the block below. Capture from the live site at 1440px wide:
+       home.png       the Three.js monument homepage (the whole reason this needs images)
+       quiz-live.png  a live quiz mid-round, timer + leaderboard visible
+       challenge.png  an AI-generated challenge with the solution editor open
+       admin.png      the admin analytics dashboard
 
-> ⚠️ **Proprietary — All Rights Reserved.** This repository is **public for review,
-> not for reuse.** You may read the source on GitHub but you may NOT clone, fork,
-> redeploy, or copy any portion of it without written permission. See
-> [LICENSE](LICENSE) for the full terms. Unauthorised use is a copyright violation.
+| | |
+|---|---|
+| ![Homepage](docs/screenshots/home.png) | ![Live quiz](docs/screenshots/quiz-live.png) |
+| ![Challenge](docs/screenshots/challenge.png) | ![Admin analytics](docs/screenshots/admin.png) |
+-->
+
+## How it's built
+
+The interesting problems here were realtime and isolation, not CRUD.
+
+**Realtime quiz.** Socket.IO rooms keyed by session code, server-authoritative scoring with a
+time bonus (`timeBonus = ((limit - taken) / limit) * points`), so the client can't fake a fast
+answer. Covered by `tests/unit/socket-quiz.test.js`.
+
+**Multi-tenancy.** Every university is a tenant, and getting isolation wrong here leaks one
+school's data into another's. I test the invariant directly rather than trusting each route to
+remember — see `tenant-scoping-invariant.test.js` and `certificate-tenant-scoping.test.js`.
+
+**AI challenge generation.** Gemini primary, OpenRouter (DeepSeek) as fallback. The model's
+output is not trusted: responses are stripped of code fences, the first JSON object is
+extracted, and the result is rejected unless it has exactly four options and a `correct_index`
+in range. Bad generations get retried, not shown to students.
+
+## Credits
+
+I led development — 189 of 194 commits. The Core Team portal was built by
+[@dglalic](https://github.com/dglalic).
 
 ---
 
@@ -422,13 +447,5 @@ buttons and cards automatically match the current scene.
 
 ## License
 
-**Proprietary — All Rights Reserved.** See [LICENSE](LICENSE) for the full
-terms.
 
-This repository is public so that students, recruiters, and the wider community
-can read the code and understand how Math Collective is built. **It is not open
-source.** You may not clone, fork, redeploy, copy code from, or submit derivatives
-of this codebase without prior written permission. Licensing inquiries:
-<24ug1byai146@bmsit.in>.
-
-© 2026 Atul Dhull · Math Collective · BMS Institute of Technology &amp; Management
+MIT. See [LICENSE](LICENSE).

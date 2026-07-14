@@ -1,75 +1,21 @@
-PROPRIETARY LICENSE — All Rights Reserved
+MIT License
 
-Copyright (c) 2026 Atul Dhull / Math Collective, BMSIT&M, Bengaluru.
+Copyright (c) 2026 Atul Dhull
 
-The source code in this repository is made publicly visible for review,
-discussion, and personal study only. It is NOT open source.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-──────────────────────────────────────────────────────────────────────
-GRANT (the narrow things you are permitted to do)
-──────────────────────────────────────────────────────────────────────
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You MAY:
-
-  - Read and study the source code on this repository's web interface
-    (e.g. github.com).
-  - Reference the design or architecture in academic writing or
-    discussion, with attribution to the author.
-
-──────────────────────────────────────────────────────────────────────
-RESTRICTIONS (the things you are NOT permitted to do)
-──────────────────────────────────────────────────────────────────────
-
-You MAY NOT, without prior written permission from the copyright
-holder:
-
-  - Clone, fork, mirror, or download this repository for any purpose
-    other than personal, non-commercial review.
-  - Run, host, re-host, deploy, or re-deploy this software on any
-    server, container, virtual machine, or hosting service — public
-    or private — whether free or paid.
-  - Use, copy, adapt, modify, translate, or create derivative works
-    from any portion of this code, design, schema, copy text, or
-    visual assets in another project, including educational,
-    portfolio, commercial, or open-source projects.
-  - Submit this code (in whole or part, original or modified) as
-    your own work, including in coursework, hackathons, internship
-    applications, or job interviews.
-  - Redistribute this code in any form, compiled or source, on any
-    medium.
-  - Train, fine-tune, or otherwise incorporate this code into any
-    machine-learning model, dataset, or AI system.
-  - Strip, alter, or obscure this notice or any copyright headers.
-
-──────────────────────────────────────────────────────────────────────
-ENFORCEMENT
-──────────────────────────────────────────────────────────────────────
-
-Unauthorised use is a copyright violation under the Copyright Act, 1957
-(India) and equivalent international treaties (Berne Convention, TRIPS).
-The copyright holder reserves every available remedy, including DMCA
-takedown notices, account-level reports to hosting platforms (GitHub,
-Render, Vercel, Netlify, Cloudflare, AWS, etc.), and civil claims.
-
-──────────────────────────────────────────────────────────────────────
-LICENSING INQUIRIES
-──────────────────────────────────────────────────────────────────────
-
-If you want to use any part of this code in your own project, contact
-the author. Reasonable requests (educational use, club-internal use,
-attribution-respecting derivatives) are usually granted.
-
-  Contact: 24ug1byai146@bmsit.in
-  Affiliation: BMS Institute of Technology and Management, Bengaluru
-
-──────────────────────────────────────────────────────────────────────
-WARRANTY DISCLAIMER
-──────────────────────────────────────────────────────────────────────
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE,
-ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
