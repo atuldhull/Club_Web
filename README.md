@@ -1,5 +1,10 @@
 # Math Collective
 
+[![CI](https://github.com/atuldhull/math-collective/actions/workflows/ci.yml/badge.svg)](https://github.com/atuldhull/math-collective/actions/workflows/ci.yml)
+[![Live](https://img.shields.io/website?url=https%3A%2F%2Fmath-collective.onrender.com&up_message=live&down_message=down&style=flat-square&label=demo)](https://math-collective.onrender.com)
+![Tests](https://img.shields.io/badge/tests-1%2C195-success?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+
 A competitive mathematics platform for universities. Students solve AI-generated challenges,
 compete in live quizzes, check into events by QR code, earn XP and climb leaderboards.
 
