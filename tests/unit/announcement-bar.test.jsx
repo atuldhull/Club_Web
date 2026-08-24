@@ -7,7 +7,7 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 
 vi.mock("@/lib/api", () => ({ events: { settings: vi.fn() } }));
 
@@ -30,9 +30,13 @@ function mockSettings(overrides = {}) {
 }
 
 function renderBar() {
+  // /login stub lets the click-through-to-sign-in behavior be asserted.
   return render(
-    <MemoryRouter>
-      <AnnouncementBar />
+    <MemoryRouter initialEntries={["/"]}>
+      <Routes>
+        <Route path="/" element={<AnnouncementBar />} />
+        <Route path="/login" element={<div>LOGIN PAGE</div>} />
+      </Routes>
     </MemoryRouter>,
   );
 }
@@ -134,6 +138,21 @@ describe("AnnouncementBar", () => {
     renderBar();
     await settled();
     expect(screen.queryByText(NOTICE)).toBeNull();
+  });
+
+  it("clicking the banner takes the visitor to the login page", async () => {
+    mockSettings();
+    renderBar();
+    fireEvent.click(await screen.findByRole("link", { name: /go to sign in/i }));
+    expect(await screen.findByText("LOGIN PAGE")).toBeInTheDocument();
+  });
+
+  it("dismissing does not navigate — it only hides the bar", async () => {
+    mockSettings();
+    renderBar();
+    fireEvent.click(await screen.findByLabelText(/dismiss announcement/i));
+    await waitFor(() => expect(screen.queryByText(NOTICE)).toBeNull());
+    expect(screen.queryByText("LOGIN PAGE")).toBeNull();
   });
 
   it("ticker style renders a seamless two-copy scrolling track", async () => {

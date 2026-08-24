@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { events as eventsApi } from "@/lib/api";
 import { useAuthStore } from "@/store/auth-store";
 import { useReducedMotionPreference } from "@/hooks/useReducedMotionPreference";
@@ -32,6 +32,7 @@ function readDismissed() {
 export default function AnnouncementBar() {
   const status = useAuthStore((s) => s.status);
   const reducedMotion = useReducedMotionPreference();
+  const navigate = useNavigate();
   const [settings, setSettings] = useState(null);
   const [dismissed, setDismissed] = useState(() => readDismissed());
 
@@ -82,7 +83,18 @@ export default function AnnouncementBar() {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-50 overflow-hidden"
         >
-          <div className="flex items-center justify-center gap-2 border-b border-primary/25 bg-gradient-to-r from-primary/15 via-secondary/10 to-primary/15 px-3 py-2.5 backdrop-blur-xl sm:gap-3 sm:px-4">
+          {/* The whole bar is a shortcut to sign-in; the Join CTA and the
+              dismiss button stopPropagation to keep their own actions. */}
+          <div
+            role="link"
+            tabIndex={0}
+            aria-label="Announcement — go to sign in"
+            onClick={() => navigate("/login")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") navigate("/login");
+            }}
+            className="flex cursor-pointer items-center justify-center gap-2 border-b border-primary/25 bg-gradient-to-r from-primary/15 via-secondary/10 to-primary/15 px-3 py-2.5 backdrop-blur-xl sm:gap-3 sm:px-4"
+          >
             <svg
               className="hidden h-4 w-4 shrink-0 text-primary sm:block"
               fill="none"
@@ -116,6 +128,7 @@ export default function AnnouncementBar() {
                         <Link
                           to="/register"
                           tabIndex={isClone ? -1 : 0}
+                          onClick={(e) => e.stopPropagation()}
                           className="inline-block whitespace-nowrap rounded-full border border-primary/40 bg-primary/20 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white transition hover:bg-primary/30"
                         >
                           Join now →
@@ -131,6 +144,7 @@ export default function AnnouncementBar() {
                 {showJoin && (
                   <Link
                     to="/register"
+                    onClick={(e) => e.stopPropagation()}
                     className="ml-2 inline-block whitespace-nowrap rounded-full border border-primary/40 bg-primary/20 px-2.5 py-0.5 align-middle font-mono text-[10px] uppercase tracking-wider text-white transition hover:bg-primary/30"
                   >
                     Join now →
@@ -140,7 +154,10 @@ export default function AnnouncementBar() {
             )}
             <button
               type="button"
-              onClick={dismiss}
+              onClick={(e) => {
+                e.stopPropagation();
+                dismiss();
+              }}
               aria-label="Dismiss announcement"
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-text-muted transition hover:bg-white/10 hover:text-white"
             >
