@@ -110,7 +110,7 @@ export default function LiveAIPanel({
                       questions: aiResult.questions.map((q) => ({ ...q, _selected: true })),
                     })
                   }
-                  className="font-mono text-[9px] text-primary hover:underline"
+                  className="rounded px-2 py-2 -my-1 font-mono text-[11px] text-primary hover:underline"
                 >
                   Select all
                 </button>
@@ -121,7 +121,7 @@ export default function LiveAIPanel({
                       questions: aiResult.questions.map((q) => ({ ...q, _selected: false })),
                     })
                   }
-                  className="font-mono text-[9px] text-text-dim hover:underline"
+                  className="rounded px-2 py-2 -my-1 font-mono text-[11px] text-text-dim hover:underline"
                 >
                   Deselect all
                 </button>
@@ -138,7 +138,7 @@ export default function LiveAIPanel({
                       : "border-line/10 bg-black/10 opacity-60"
                   }`}
                 >
-                  <div className="flex items-start gap-2">
+                  <label className="flex cursor-pointer items-start gap-2">
                     <input
                       type="checkbox"
                       checked={q._selected}
@@ -153,11 +153,11 @@ export default function LiveAIPanel({
                       <p className="text-xs font-medium text-white">{q.title}</p>
                       <p className="mt-1 text-[11px] text-text-muted line-clamp-2">{q.question}</p>
                       {q.options && (
-                        <div className="mt-2 grid grid-cols-2 gap-1">
+                        <div className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
                           {q.options.map((opt, oi) => (
                             <div
                               key={oi}
-                              className={`rounded px-2 py-1 text-[10px] ${
+                              className={`rounded px-2 py-1 text-[11px] break-words ${
                                 oi === q.correct_index
                                   ? "bg-success/10 text-success font-medium"
                                   : "bg-white/[0.02] text-text-dim"
@@ -178,7 +178,7 @@ export default function LiveAIPanel({
                         <span>{q.points || 50} pts</span>
                       </div>
                     </div>
-                  </div>
+                  </label>
                 </div>
               ))}
             </div>

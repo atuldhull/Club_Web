@@ -454,7 +454,7 @@ export default function ChatPanel({ open, onClose, initialPeerUserId = null, onT
                 return (
                   <div key={msg.id || i} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`max-w-[80%] px-3 py-2 text-[13px] leading-relaxed ${
+                      className={`min-w-0 max-w-[80%] break-words px-3 py-2 text-[13px] leading-relaxed ${
                         isMine
                           ? "rounded-2xl rounded-br-sm bg-primary/20 text-white"
                           : "rounded-2xl rounded-bl-sm bg-white/[0.05] text-text-muted"
@@ -483,7 +483,7 @@ export default function ChatPanel({ open, onClose, initialPeerUserId = null, onT
             )}
 
             {/* Input */}
-            <div className="border-t border-line/10 px-3 py-2">
+            <div className="sai-bottom border-t border-line/10 px-3 py-2">
               <div className="flex items-center gap-2">
                 <input
                   value={input}

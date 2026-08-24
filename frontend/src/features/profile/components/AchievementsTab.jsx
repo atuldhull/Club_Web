@@ -97,7 +97,7 @@ export default function AchievementsTab({ userId }) {
             <div className="text-3xl" aria-hidden>{info.icon || "🏅"}</div>
             <p className="line-clamp-2 text-sm font-semibold text-white">{info.title}</p>
             {info.description && (
-              <p className="line-clamp-2 font-mono text-[10px] text-text-dim">{info.description}</p>
+              <p className="line-clamp-2 font-mono text-[11px] leading-4 text-text-dim">{info.description}</p>
             )}
             <p className="mt-auto font-mono text-[9px] uppercase tracking-wider text-text-dim">
               {formatDate(unlocked)}

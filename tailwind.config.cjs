@@ -66,11 +66,19 @@ module.exports = {
           "0%, 100%": { opacity: "0.55", transform: "scale(0.98)" },
           "50%": { opacity: "1", transform: "scale(1.04)" },
         },
+        // News-ticker scroll for the announcement bar: the track holds
+        // two copies of the message, so -50% lands exactly on the start
+        // of the second copy for a seamless loop.
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         shimmer: "shimmer 2.8s ease-in-out infinite",
         float: "float 7s ease-in-out infinite",
         "pulse-slow": "pulseSlow 4s ease-in-out infinite",
+        marquee: "marquee var(--marquee-duration, 18s) linear infinite",
       },
     },
   },

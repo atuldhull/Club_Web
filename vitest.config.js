@@ -135,6 +135,9 @@ export default defineConfig({
         "frontend/src/components/RouteErrorBoundary.jsx",
         "frontend/src/components/auth/ProtectedRoute.jsx",
         "frontend/src/components/auth/GuestOnlyRoute.jsx",
+        // Announcement banner — visibility matrix pinned by
+        // announcement-bar.test.jsx.
+        "frontend/src/components/AnnouncementBar.jsx",
         // UI primitives used everywhere; pinned so regressions on
         // prop-driven branching are caught in CI.
         "frontend/src/components/ui/Button.jsx",

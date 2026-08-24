@@ -164,7 +164,7 @@ export default function CoreFeedbackPage() {
                         {new Date(f.created_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-text-primary">{f.body}</p>
+                    <p className="mt-3 break-words text-sm leading-7 text-text-primary">{f.body}</p>
                     {f.flag_reason && <p className="mt-2 text-xs text-danger">{f.flag_reason}</p>}
 
                     <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-line/10 pt-3">

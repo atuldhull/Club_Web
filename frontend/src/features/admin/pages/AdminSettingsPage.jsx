@@ -134,20 +134,79 @@ export default function AdminSettingsPage() {
           </div>
         </Card>
 
-        {/* Site Notice */}
+        {/* Announcement Banner */}
         <Card variant="glass">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-secondary">Site Notice</p>
-          <p className="mt-1 text-xs text-text-dim">Banner message shown to all users across the platform</p>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-secondary">Announcement Banner</p>
+              <p className="mt-1 text-xs text-text-dim">
+                {settings.banner_enabled === "true"
+                  ? "Live — pinned to the top of every page"
+                  : "Off — turn on to pin the message to the top of every page"}
+              </p>
+            </div>
+            <button
+              onClick={() => updateAndSave("banner_enabled", settings.banner_enabled === "true" ? "false" : "true")}
+              disabled={saving}
+              aria-label="Toggle announcement banner"
+              className={`relative h-6 w-11 shrink-0 rounded-full transition ${settings.banner_enabled === "true" ? "bg-primary" : "bg-white/10"}`}>
+              <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${settings.banner_enabled === "true" ? "translate-x-5" : "translate-x-0.5"}`} />
+            </button>
+          </div>
           <textarea
             value={settings.site_notice || ""}
             onChange={(e) => setSettings({ ...settings, site_notice: e.target.value })}
-            placeholder="Leave empty for no banner..."
+            placeholder="Registrations are open — join the Collective!"
             rows={3}
             className="mt-4 w-full rounded-xl border border-line/15 bg-black/15 px-4 py-3 text-sm text-white outline-none focus:border-primary/30"
           />
-          <Button size="sm" className="mt-3" onClick={() => saveSetting("site_notice", settings.site_notice || "")} loading={saving}>
-            Update Notice
-          </Button>
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap gap-2">
+              <div className="flex overflow-hidden rounded-full border border-line/15">
+                {[
+                  { value: "guests", label: "New visitors" },
+                  { value: "all", label: "Everyone" },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => updateAndSave("banner_audience", opt.value)}
+                    disabled={saving}
+                    className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition ${
+                      (settings.banner_audience === "all" ? "all" : "guests") === opt.value
+                        ? "bg-primary/20 text-white"
+                        : "text-text-muted hover:text-white"
+                    }`}>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              <div className="flex overflow-hidden rounded-full border border-line/15">
+                {[
+                  { value: "ticker", label: "Ticker" },
+                  { value: "static", label: "Static" },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => updateAndSave("banner_style", opt.value)}
+                    disabled={saving}
+                    className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition ${
+                      (settings.banner_style === "ticker" ? "ticker" : "static") === opt.value
+                        ? "bg-secondary/20 text-white"
+                        : "text-text-muted hover:text-white"
+                    }`}>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <Button size="sm" onClick={() => saveSetting("site_notice", settings.site_notice || "")} loading={saving}>
+              Update Notice
+            </Button>
+          </div>
+          <p className="mt-2 text-[11px] text-text-dim">
+            &ldquo;New visitors&rdquo; shows the banner (with a Join CTA) only to people who aren&apos;t signed in.
+            &ldquo;Ticker&rdquo; scrolls the message like running news.
+          </p>
         </Card>
 
         {/* Platform Info */}

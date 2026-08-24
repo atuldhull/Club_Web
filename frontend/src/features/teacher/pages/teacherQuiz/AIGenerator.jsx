@@ -120,7 +120,7 @@ export default function AIGenerator({
                       >
                         {/* Render through MathRender so AI-generated $\\frac{a}{b}$
                             shows as a real fraction instead of raw LaTeX source. */}
-                        <div className="text-sm text-white">
+                        <div className="text-sm text-white overflow-x-auto [&_.katex]:whitespace-nowrap">
                           <span className="mr-2 font-mono text-text-dim">{i + 1}.</span>
                           <MathRender source={String(q.title || q.question || q.text || "")} className="inline [&_.katex]:text-white" />
                         </div>

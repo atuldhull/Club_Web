@@ -92,8 +92,8 @@ export default function CoreIdeasPage() {
                     </span>
                   )}
                 </div>
-                <h3 className="mt-3 font-display text-lg font-bold text-white">{idea.title}</h3>
-                <p className="mt-1 flex-1 text-sm leading-6 text-text-muted">{idea.body}</p>
+                <h3 className="mt-3 break-words font-display text-lg font-bold text-white">{idea.title}</h3>
+                <p className="mt-1 flex-1 break-words text-sm leading-6 text-text-muted">{idea.body}</p>
 
                 <p className="mt-3 font-mono text-[10px] text-text-dim">by {idea.author_name || "A core member"}</p>
 

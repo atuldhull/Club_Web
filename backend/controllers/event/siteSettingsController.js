@@ -5,7 +5,15 @@
 import supabase from "../../config/supabase.js";
 import { logger } from "../../config/logger.js";
 
-const ALLOWED_SETTING_KEYS = ["registrations_open", "site_notice", "arena_open", "registration_message"];
+const ALLOWED_SETTING_KEYS = [
+  "registrations_open",
+  "site_notice",
+  "arena_open",
+  "registration_message",
+  "banner_enabled",
+  "banner_audience",
+  "banner_style",
+];
 
 export const getSiteSettings = async (req, res) => {
   try {

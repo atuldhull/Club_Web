@@ -108,7 +108,7 @@ export default function AuthLayout() {
           </section>
 
           {/* Right - Auth form */}
-          <main className="flex items-start justify-center pt-8 lg:items-center lg:pt-0">
+          <main className="order-first flex items-start justify-center pt-8 lg:order-none lg:items-center lg:pt-0">
             <div className="w-full max-w-md">
               <Outlet />
             </div>

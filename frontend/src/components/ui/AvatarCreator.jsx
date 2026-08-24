@@ -447,7 +447,7 @@ export default function AvatarCreator({
           {tab === "emoji" && (
             <div className="space-y-3">
               <p className="text-center text-xs text-text-dim">Pick an emoji that represents you</p>
-              <div className="grid grid-cols-8 gap-1.5">
+              <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-8">
                 {EMOJI_FACES.map((emoji) => (
                   <button
                     key={emoji}

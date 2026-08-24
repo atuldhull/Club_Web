@@ -246,7 +246,7 @@ export default function EventScannerPage() {
                     <span className="text-2xl">
                       {scanResult.type === "success" ? "✅" : scanResult.type === "warning" ? "⚠️" : "❌"}
                     </span>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <p className={`text-sm font-medium ${
                         scanResult.type === "success" ? "text-success" :
                         scanResult.type === "warning" ? "text-warning" : "text-danger"
@@ -254,7 +254,7 @@ export default function EventScannerPage() {
                         {scanResult.message}
                       </p>
                       {scanResult.student && (
-                        <p className="mt-0.5 text-xs text-text-dim">
+                        <p className="mt-0.5 break-words text-xs text-text-dim">
                           {scanResult.student.name} · {scanResult.student.email}
                         </p>
                       )}

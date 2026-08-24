@@ -295,7 +295,7 @@ function LinkListEditor({ label, links, kindKey, kindOptions, onChange }) {
         <button
           type="button"
           onClick={add}
-          className="font-mono text-[10px] uppercase tracking-wider text-primary hover:underline"
+          className="-mx-2 -my-2 px-2 py-2 font-mono text-[10px] uppercase tracking-wider text-primary hover:underline"
         >
           + Add
         </button>

@@ -79,7 +79,7 @@ export default function CoreMeetingsPage() {
             )}
           </div>
           <h3 className="mt-2 font-display text-lg font-semibold text-white">{m.title}</h3>
-          {m.description && <p className="mt-1 text-sm leading-6 text-text-muted">{m.description}</p>}
+          {m.description && <p className="mt-1 break-words text-sm leading-6 text-text-muted">{m.description}</p>}
           <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] text-text-dim">
             {m.location && <span>📍 {m.location}</span>}
             {m.host && <span>Hosted by {m.host.name}</span>}
@@ -94,7 +94,7 @@ export default function CoreMeetingsPage() {
                   key={o.key}
                   disabled={busy === m.id}
                   onClick={() => rsvp(m, o.key)}
-                  className={`rounded-full border px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition disabled:opacity-50 ${
+                  className={`rounded-full border px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] transition disabled:opacity-50 sm:px-3.5 sm:py-1.5 ${
                     m.myRsvp === o.key ? o.cls : "border-line/15 bg-white/[0.02] text-text-muted hover:text-white"
                   }`}
                 >
@@ -194,7 +194,7 @@ function NewMeetingModal({ member, onClose, onCreated }) {
           <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
             className={INPUT_CLS} placeholder="Agenda, what to bring…" />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="When">
             <input type="datetime-local" value={form.scheduledAt}
               onChange={(e) => setForm({ ...form, scheduledAt: e.target.value })} className={INPUT_CLS} />

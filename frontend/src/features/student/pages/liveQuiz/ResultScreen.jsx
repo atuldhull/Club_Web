@@ -60,7 +60,7 @@ export default function ResultScreen({ result, question, selectedAnswer, playerN
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
                 Question {question.questionNumber}
               </p>
-              <h3 className="mt-2 font-display text-lg font-bold text-white">
+              <h3 className="mt-2 break-words font-display text-lg font-bold text-white">
                 {question.question}
               </h3>
 

@@ -286,8 +286,46 @@ export default function TreasureHuntSection({ onOpen }) {
           </motion.p>
         </div>
 
+        {/* Mobile fallback — the scattered map needs ~1000px of width for its
+            fixed-size cards; on phones they'd overlap and clip, so show a
+            simple 2-up grid instead */}
+        <div className="grid grid-cols-2 gap-3 md:hidden">
+          {files.map((file, i) => {
+            const isLast = i === files.length - 1;
+            const isVid = file.type === "vid";
+            return (
+              <div key={i}>
+                <div
+                  className={`cursor-pointer overflow-hidden rounded-lg bg-[#2a1500] shadow-[0_4px_20px_rgba(0,0,0,0.5)] ${
+                    isLast
+                      ? "border-[3px] border-[#e8c070]"
+                      : isVid
+                        ? "border-[2.5px] border-dashed border-[#c06010]"
+                        : "border-[2.5px] border-[#8B6340]"
+                  }`}
+                  onClick={() => file.type === "img" && onOpen(file.url)}
+                >
+                  {file.type === "img" ? (
+                    <img src={file.url} alt={file.label} loading="lazy" decoding="async"
+                      width="400" height="300" className="h-32 w-full object-cover" />
+                  ) : (
+                    <video controls muted playsInline preload="metadata" className="h-32 w-full object-cover">
+                      <source src={file.url} type="video/mp4" />
+                    </video>
+                  )}
+                </div>
+                <p className={`mt-1.5 text-center font-mono text-[9px] uppercase tracking-[2px] ${
+                  isLast ? "font-bold text-[#e8c070]" : "text-[#a07040]"
+                }`}>
+                  {file.label}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Scattered map container */}
-        <div ref={containerRef} className="relative" style={{ height: `${maxBottom}vw`, minHeight: 1800 }}>
+        <div ref={containerRef} className="relative hidden md:block" style={{ height: `${maxBottom}vw`, minHeight: 1800 }}>
           {dims.w > 0 && <MapCanvas containerW={dims.w} containerH={containerRef.current?.offsetHeight || 1200} />}
 
           {files.map((file, i) => (

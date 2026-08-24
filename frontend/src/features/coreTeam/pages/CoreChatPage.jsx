@@ -111,8 +111,10 @@ export default function CoreChatPage() {
     return <div className="flex justify-center py-20"><Loader variant="orbit" size="lg" label="Loading chat…" /></div>;
   }
 
+  // dvh (vh fallback) because mobile 100vh includes the collapsed
+  // URL-bar area, which pushes the composer below the visible viewport.
   return (
-    <div className="flex h-[calc(100vh-13rem)] min-h-[440px] flex-col">
+    <div className="flex h-[calc(100vh-13rem)] min-h-[360px] flex-col supports-[height:100dvh]:h-[calc(100dvh-13rem)]">
       {/* anonymity banner */}
       <div className={`mb-3 rounded-xl border px-4 py-2.5 text-xs ${
         isOwner
@@ -151,7 +153,7 @@ export default function CoreChatPage() {
                   <button
                     onClick={() => remove(m.id)}
                     aria-label="Delete message"
-                    className="ml-1 text-[11px] text-text-dim opacity-0 transition hover:text-danger group-hover:opacity-100"
+                    className="-m-1 ml-1 p-2 text-[13px] text-text-dim transition hover:text-danger sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
                   >
                     ✕
                   </button>

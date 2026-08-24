@@ -189,7 +189,7 @@ export default function LeaderboardPage() {
           >
             {/* Top 3 podium */}
             {current.length >= 3 && tab !== "winners" && (
-              <div className="mx-auto mb-10 grid max-w-4xl grid-cols-3 gap-5 sm:gap-6">
+              <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-6">
                 {[1, 0, 2].map((idx) => {
                   const p = current[idx];
                   if (!p) return null;

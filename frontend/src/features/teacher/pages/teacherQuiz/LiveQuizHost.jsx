@@ -80,7 +80,7 @@ export default function LiveQuizHost({
                 {liveSelectedQs.length > 0 && (
                   <button
                     onClick={() => setLiveSelectedQs([])}
-                    className="font-mono text-[9px] text-danger hover:underline"
+                    className="rounded px-2 py-2 -my-1 font-mono text-[11px] text-danger hover:underline"
                   >
                     Clear all
                   </button>
@@ -117,7 +117,7 @@ export default function LiveQuizHost({
                       />
                       <span className="flex-1 text-xs text-white">{c.title}</span>
                       <span
-                        className={`font-mono text-[9px] ${
+                        className={`font-mono text-[10px] ${
                           (c.difficulty || "").toLowerCase() === "hard"
                             ? "text-danger"
                             : (c.difficulty || "").toLowerCase() === "extreme"
@@ -129,7 +129,7 @@ export default function LiveQuizHost({
                       >
                         {c.difficulty}
                       </span>
-                      <span className="font-mono text-[9px] text-text-dim">{c.points}pts</span>
+                      <span className="font-mono text-[10px] text-text-dim">{c.points}pts</span>
                     </label>
                   ))
                 )}
@@ -137,7 +137,7 @@ export default function LiveQuizHost({
               <div className="mt-2 flex gap-2">
                 <button
                   onClick={() => setLiveSelectedQs((challengePool || []).map((c) => c.id))}
-                  className="font-mono text-[9px] text-primary hover:underline"
+                  className="rounded px-2 py-2 -my-1 font-mono text-[11px] text-primary hover:underline"
                 >
                   Select all
                 </button>
@@ -175,11 +175,11 @@ export default function LiveQuizHost({
         <div className="mt-5 space-y-4">
           {/* Session info */}
           <div className="flex flex-wrap items-center gap-4">
-            <div className="rounded-xl border border-success/30 bg-success/10 px-5 py-3 text-center">
+            <div className="w-full rounded-xl border border-success/30 bg-success/10 px-5 py-3 text-center sm:w-auto">
               <p className="font-mono text-[10px] text-success">QUIZ CODE</p>
               <p
-                className="math-text"
-                style={{ fontSize: "3rem", letterSpacing: "0.5em", color: "var(--monument-city)" }}
+                className="math-text text-3xl tracking-[0.25em] sm:text-5xl sm:tracking-[0.5em]"
+                style={{ color: "var(--monument-city)" }}
               >
                 {liveCode}
               </p>

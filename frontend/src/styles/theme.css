@@ -286,8 +286,12 @@ h1, h2, h3, h4 {
   button, a, [role="button"], input, select, textarea {
     min-height: 44px;
   }
-  /* Larger tap targets for small interactive elements */
-  .font-mono.text-\[10px\], .font-mono.text-\[9px\], .font-mono.text-\[11px\] {
+  /* Larger tap targets for small interactive elements — scoped to
+     interactive tags only, so plain spans/paragraphs/badges keep
+     their block/truncate layout */
+  button.font-mono.text-\[10px\], a.font-mono.text-\[10px\], [role="button"].font-mono.text-\[10px\], label.font-mono.text-\[10px\], summary.font-mono.text-\[10px\],
+  button.font-mono.text-\[9px\], a.font-mono.text-\[9px\], [role="button"].font-mono.text-\[9px\], label.font-mono.text-\[9px\], summary.font-mono.text-\[9px\],
+  button.font-mono.text-\[11px\], a.font-mono.text-\[11px\], [role="button"].font-mono.text-\[11px\], label.font-mono.text-\[11px\], summary.font-mono.text-\[11px\] {
     min-height: 36px;
     display: inline-flex;
     align-items: center;

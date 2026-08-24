@@ -155,7 +155,7 @@ export default function EventExplorer({ activeFilter, onFilterChange, eventCount
 
                   {/* Description (revealed on hover/active) */}
                   <p className={`mt-1 text-[10px] leading-snug transition-all duration-300 ${
-                    isActive ? "text-text-muted opacity-100" : "text-text-dim opacity-0 group-hover:opacity-100"
+                    isActive ? "text-text-muted opacity-100" : "text-text-dim opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                   }`}>
                     {cat.description}
                   </p>

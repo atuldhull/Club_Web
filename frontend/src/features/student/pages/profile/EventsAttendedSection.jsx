@@ -52,7 +52,7 @@ export default function EventsAttendedSection() {
                   {ev.xp_reward > 0 && <span className="ml-2 text-primary">+{ev.xp_reward} XP</span>}
                 </p>
               </div>
-              <span className={`rounded-full px-1.5 py-0.5 font-mono text-[7px] uppercase ${
+              <span className={`rounded-full px-1.5 py-0.5 font-mono text-[9px] uppercase ${
                 ev.user_registration?.status === "attended" ? "bg-success/10 text-success"
                 : ev.user_registration?.status === "waitlisted" ? "bg-warning/10 text-warning"
                 : "bg-secondary/10 text-secondary"

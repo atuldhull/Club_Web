@@ -141,11 +141,11 @@ function FriendsCard() {
                   await chat.respondRequest(req.id, true);
                   setPending((p) => p.filter((r) => r.id !== req.id));
                   chat.getFriends().then((r) => setFriends(r.data || []));
-                }} className="rounded bg-success/15 px-2 py-1 text-[9px] text-success hover:bg-success/25">Accept</button>
+                }} className="rounded-lg bg-success/15 px-3 py-2 text-[11px] text-success hover:bg-success/25">Accept</button>
                 <button onClick={async () => {
                   await chat.respondRequest(req.id, false);
                   setPending((p) => p.filter((r) => r.id !== req.id));
-                }} className="rounded bg-danger/15 px-2 py-1 text-[9px] text-danger hover:bg-danger/25">Decline</button>
+                }} className="rounded-lg bg-danger/15 px-3 py-2 text-[11px] text-danger hover:bg-danger/25">Decline</button>
               </div>
             ))
           )
@@ -169,7 +169,7 @@ function FriendsCard() {
                   </p>
                   <p className="text-[9px] text-text-dim">{u.xp || 0} XP</p>
                 </div>
-                <Link to={`/profile/${u.user_id}`} className="rounded bg-primary/15 px-2 py-1 text-[9px] text-primary hover:bg-primary/25">
+                <Link to={`/profile/${u.user_id}`} className="rounded-lg bg-primary/15 px-3 py-2 text-[11px] text-primary hover:bg-primary/25">
                   View
                 </Link>
               </div>

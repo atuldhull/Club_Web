@@ -283,10 +283,12 @@ export default function ArenaPage() {
                   {/* Question — math segments rendered via KaTeX so
                       authored $\int_0^1 x\,dx$ shows as a real integral. */}
                   <h2 className="mt-4 font-display text-2xl font-bold text-white">{challenge.title}</h2>
-                  <MathRender
-                    source={String(challenge.question || "")}
-                    className="mt-3 text-sm leading-7 text-text-muted [&_.katex]:text-text-muted"
-                  />
+                  <div className="overflow-x-auto">
+                    <MathRender
+                      source={String(challenge.question || "")}
+                      className="mt-3 text-sm leading-7 text-text-muted [&_.katex]:text-text-muted"
+                    />
+                  </div>
 
                   {/* Options */}
                   {!result && (
@@ -308,7 +310,7 @@ export default function ArenaPage() {
                           style={{ clipPath: "var(--clip-notch)" }}
                         >
                           <span className="math-text mr-3 text-xs text-primary">{String.fromCharCode(65 + i)}.</span>
-                          <MathRender source={String(opt || "")} className="inline [&_.katex]:text-current" />
+                          <MathRender source={String(opt || "")} className="inline break-words [&_.katex]:text-current [&_.katex]:whitespace-normal" />
                         </motion.button>
                       ))}
                       <Button
@@ -376,11 +378,11 @@ export default function ArenaPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-3 flex gap-2">
+                    <div className="mt-3 flex flex-wrap gap-2">
                       <input type="text" value={commentInput} onChange={(e) => setCommentInput(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && postComment()}
                         placeholder="Comment or ask a question..."
-                        className="flex-1 rounded-lg border border-line/15 bg-black/15 px-3 py-2 text-xs text-white outline-none focus:border-primary/30" />
+                        className="min-w-0 flex-1 basis-full rounded-lg border border-line/15 bg-black/15 px-3 py-2 text-xs text-white outline-none focus:border-primary/30 sm:basis-auto" />
                       <Button variant="ghost" size="sm" onClick={postComment} disabled={commentLoading || !commentInput.trim()}>
                         Post
                       </Button>

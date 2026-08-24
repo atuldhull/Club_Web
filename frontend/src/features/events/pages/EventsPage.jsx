@@ -390,7 +390,7 @@ export default function EventsPage() {
             <button
               key={f.key}
               onClick={() => setFilter(f.key === filter ? "all" : f.key)}
-              className={`rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition ${
+              className={`min-h-[36px] rounded-full border px-3 py-2 font-mono text-[10px] uppercase tracking-wider transition sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[9px] ${
                 filter === f.key
                   ? "border-primary/30 bg-primary/10 text-primary"
                   : "border-line/10 bg-white/[0.02] text-text-dim hover:text-text-muted hover:border-line/20"
@@ -739,7 +739,7 @@ export default function EventsPage() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="mt-3 flex items-center gap-2"
+                                className="mt-3 flex flex-wrap items-center gap-2"
                               >
                                 <input
                                   type="text"
@@ -747,7 +747,7 @@ export default function EventsPage() {
                                   value={checkinCode}
                                   onChange={(e) => setCheckinCode(e.target.value)}
                                   onKeyDown={(e) => e.key === "Enter" && handleCheckin(event)}
-                                  className="w-40 rounded-lg border border-line/15 bg-black/15 px-3 py-2 font-mono text-sm text-white outline-none focus:border-primary/30"
+                                  className="w-full min-w-0 rounded-lg border border-line/15 bg-black/15 px-3 py-2 font-mono text-sm text-white outline-none focus:border-primary/30 sm:w-40"
                                   autoFocus
                                 />
                                 <Button size="sm" onClick={() => handleCheckin(event)} loading={isActing}>

@@ -30,7 +30,7 @@ const NAV = [
 
 function navClass(isActive) {
   return cn(
-    "flex items-center gap-3 rounded-xl px-4 py-3 transition duration-200",
+    "flex shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-4 py-3 transition duration-200",
     isActive
       ? "border border-primary/30 bg-primary/12 text-white shadow-orbit"
       : "text-text-muted hover:bg-white/[0.04] hover:text-white",
@@ -123,20 +123,25 @@ export default function CoreTeamLayout() {
                   <p className="truncate font-mono text-[10px] text-text-dim">{member?.position} · {teamName}</p>
                 </div>
               </div>
-              <div className="mt-3 flex items-center justify-between">
+              {/* Points + rank are lg-only — on phones the chip stays a
+                  single compact row so the stacked sidebar doesn't push
+                  the page content below the fold. */}
+              <div className="mt-3 hidden items-center justify-between lg:flex">
                 <CoreBadge tier={member?.tier} />
                 <span className="math-text text-sm font-bold text-primary">
                   {member?.points ?? 0} <span className="font-mono text-[9px] text-text-dim">pts</span>
                 </span>
               </div>
               {teamRank && (
-                <p className="mt-2 font-mono text-[10px] text-text-dim">
+                <p className="mt-2 hidden font-mono text-[10px] text-text-dim lg:block">
                   Rank #{teamRank.rank} of {teamRank.of} in {teamName}
                 </p>
               )}
             </div>
 
-            <nav className="mt-5 space-y-1.5 lg:flex-1">
+            {/* Below lg the nav collapses into a horizontally scrollable
+                pill row instead of a full-height stacked list. */}
+            <nav className="mt-5 flex gap-1.5 overflow-x-auto lg:block lg:flex-1 lg:space-y-1.5 lg:overflow-visible">
               {NAV.map((item) => (
                 <NavLink key={item.to} to={item.to} end={item.end} className={({ isActive }) => navClass(isActive)}>
                   <NavIcon d={item.icon} />

@@ -83,7 +83,7 @@ export default function ChatBot() {
   function renderContent(text) {
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
-      .replace(/`(.*?)`/g, '<code class="rounded bg-primary/15 px-1.5 py-0.5 font-mono text-xs text-glow">$1</code>')
+      .replace(/`(.*?)`/g, '<code class="whitespace-pre-wrap break-all rounded bg-primary/15 px-1.5 py-0.5 font-mono text-xs text-glow">$1</code>')
       .replace(/\n/g, "<br/>");
   }
 
@@ -143,7 +143,7 @@ export default function ChatBot() {
             className="fixed bottom-[108px] right-7 z-50 flex flex-col overflow-hidden border-2 border-primary/15 shadow-[0_40px_120px_rgba(0,0,0,0.65)]"
             style={{
               width: "min(480px, calc(100vw - 2rem))",
-              height: "min(680px, calc(100vh - 10rem))",
+              height: "min(680px, calc(100dvh - 10rem))",
             }}
           >
             {/* Glass bg */}
@@ -200,7 +200,7 @@ export default function ChatBot() {
                     </div>
                   )}
                   <div
-                    className={`max-w-[82%] rounded-2xl px-4 py-3 text-[13.5px] leading-[1.7] ${
+                    className={`max-w-[82%] break-words rounded-2xl px-4 py-3 text-[13.5px] leading-[1.7] ${
                       msg.role === "user"
                         ? "rounded-br-sm bg-gradient-to-br from-primary/30 to-primary/15 text-white shadow-[0_4px_16px_rgba(131,82,255,0.15)]"
                         : "rounded-bl-sm border border-line/10 bg-surface/80 text-text-muted"

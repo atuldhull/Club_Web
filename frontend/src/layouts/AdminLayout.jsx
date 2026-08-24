@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 
 function navClass(isActive) {
   return cn(
-    "flex items-center gap-3 rounded-xl px-4 py-3 transition duration-200",
+    "flex shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-4 py-3 transition duration-200",
     isActive
       ? "border border-primary/30 bg-primary/12 text-white shadow-orbit"
       : "text-text-muted hover:bg-white/[0.04] hover:text-white",
@@ -82,7 +82,9 @@ export default function AdminLayout() {
               </span>
             </div>
 
-            <nav className="mt-6 space-y-1.5 lg:flex-1">
+            {/* Below lg the nav collapses into a horizontally scrollable
+                pill row instead of a full-height stacked list. */}
+            <nav className="mt-6 flex gap-1.5 overflow-x-auto lg:block lg:flex-1 lg:space-y-1.5 lg:overflow-visible">
               {adminNavigation.map((item) => (
                 <NavLink
                   key={item.to}

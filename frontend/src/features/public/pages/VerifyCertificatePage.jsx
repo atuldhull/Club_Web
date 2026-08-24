@@ -158,7 +158,7 @@ function Row({ label, value, strong, mono }) {
       <dt className="font-mono text-[10px] uppercase tracking-wider text-text-dim sm:w-32 sm:shrink-0">
         {label}
       </dt>
-      <dd className={`flex-1 ${mono ? "font-mono" : ""} ${strong ? "font-semibold text-white" : "text-text-muted"}`}>
+      <dd className={`flex-1 ${mono ? "break-all font-mono" : "break-words"} ${strong ? "font-semibold text-white" : "text-text-muted"}`}>
         {value}
       </dd>
     </div>

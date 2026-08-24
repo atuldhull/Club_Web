@@ -93,7 +93,10 @@ function compile(source) {
   }
   return parts
     .map((p) => {
-      if (p.type === "block")  return `<div style="margin:0.5em 0">${renderMath(p.content, true)}</div>`;
+      // KaTeX's .katex-display output never line-wraps, so the wrapper
+      // scrolls wide equations inside its own box instead of letting
+      // them drag the whole page into horizontal scroll on phones.
+      if (p.type === "block")  return `<div style="margin:0.5em 0;overflow-x:auto;max-width:100%">${renderMath(p.content, true)}</div>`;
       if (p.type === "inline") return renderMath(p.content, false);
       return escapeHtml(p.content).replace(/\n/g, "<br/>");
     })

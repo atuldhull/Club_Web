@@ -284,7 +284,7 @@ export default function AdminChallengesPage() {
                     <p className="mt-1 text-sm text-text-muted">{generated.solution || generated.explanation}</p>
                   </div>
                 )}
-                <div className="mt-4 flex gap-3">
+                <div className="mt-4 flex flex-wrap gap-3">
                   <Button onClick={handleAiSave} loading={aiSaving} size="sm" variant="secondary">Save to Bank</Button>
                   <Button onClick={handleAiGenerate} loading={generating} size="sm" variant="primary">Regenerate</Button>
                   <Button onClick={() => setGenerated(null)} size="sm" variant="ghost">Discard</Button>

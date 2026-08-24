@@ -81,7 +81,7 @@ export default function IdentityCeremonyModal({ onRestoreRequest }) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/70 backdrop-blur-md px-4"
+        className="fixed inset-0 z-[9998] flex items-center justify-center overflow-y-auto bg-black/70 backdrop-blur-md px-4 py-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -93,7 +93,7 @@ export default function IdentityCeremonyModal({ onRestoreRequest }) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-lg rounded-2xl border border-line/20 bg-panel/95 p-6 shadow-2xl"
+          className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-line/20 bg-panel/95 p-6 shadow-2xl"
         >
           {/* Close X — belts-and-suspenders dismiss path. */}
           <button
@@ -198,14 +198,14 @@ export default function IdentityCeremonyModal({ onRestoreRequest }) {
               <h2 className="mt-1 font-display text-xl font-bold text-white">
                 Save these — they are your key
               </h2>
-              <div className="mt-4 grid grid-cols-3 gap-2">
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {words.map((w, i) => (
                   <div
                     key={i}
                     className="flex items-center gap-2 rounded-lg border border-line/15 bg-black/25 px-2 py-2"
                   >
                     <span className="font-mono text-[9px] text-text-dim w-4 text-right">{i + 1}</span>
-                    <span className="truncate font-mono text-sm text-white">{w}</span>
+                    <span className="break-all font-mono text-sm text-white">{w}</span>
                   </div>
                 ))}
               </div>

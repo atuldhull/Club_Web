@@ -322,7 +322,7 @@ export default function TeacherCertificatesPage() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setLogoFile(e.target.files[0])}
-                    className="flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
+                    className="min-w-0 flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
                   />
                   <Button
                     size="sm"
@@ -350,7 +350,7 @@ export default function TeacherCertificatesPage() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setSigFile(e.target.files[0])}
-                    className="flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
+                    className="min-w-0 flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
                   />
                   <Button
                     size="sm"
@@ -383,7 +383,7 @@ export default function TeacherCertificatesPage() {
                     type="file"
                     accept="image/png,image/jpeg"
                     onChange={(e) => setTemplateFile(e.target.files[0])}
-                    className="flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
+                    className="min-w-0 flex-1 text-sm text-text-muted file:mr-3 file:rounded-lg file:border file:border-line/15 file:bg-surface/50 file:px-3 file:py-1.5 file:font-mono file:text-[11px] file:uppercase file:text-text-muted file:transition hover:file:border-primary/30 hover:file:text-white"
                   />
                   <Button
                     size="sm"
@@ -652,9 +652,9 @@ export default function TeacherCertificatesPage() {
               {batches.map((batch) => (
                 <div
                   key={batch.id || batch._id}
-                  className="flex items-center justify-between rounded-xl border border-line/10 bg-black/10 px-4 py-3"
+                  className="flex flex-col gap-3 rounded-xl border border-line/10 bg-black/10 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-medium text-white">
                       {batch.event_name || batch.eventName || batch.title || "Unnamed Batch"}
                     </p>

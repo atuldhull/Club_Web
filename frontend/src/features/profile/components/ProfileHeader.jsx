@@ -86,7 +86,7 @@ export default function ProfileHeader({ profile, access, userId, coreBadge }) {
               Non-self viewers NEVER see this because the backend
               only serialises email for access.isSelf. */}
           {access.isSelf && profile.email && (
-            <p className="mt-1 font-mono text-[11px] text-text-dim">
+            <p className="mt-1 break-all font-mono text-[11px] text-text-dim">
               {profile.email}
             </p>
           )}

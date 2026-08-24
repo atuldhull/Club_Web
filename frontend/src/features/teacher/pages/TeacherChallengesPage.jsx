@@ -351,7 +351,7 @@ export default function TeacherChallengesPage() {
                     </div>
                   )}
 
-                  <div className="mt-4 flex gap-3">
+                  <div className="mt-4 flex flex-wrap gap-3">
                     <Button
                       onClick={handleSaveQuestion}
                       loading={saving}

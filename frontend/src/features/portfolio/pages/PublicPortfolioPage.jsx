@@ -164,7 +164,7 @@ export default function PublicPortfolioPage() {
                     href={w.repo_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-1.5 font-mono text-[11px] text-primary hover:underline"
+                    className="mt-2 inline-flex items-center gap-1.5 break-all font-mono text-[11px] text-primary hover:underline"
                   >
                     ↗ {w.repo_url.replace(/^https?:\/\//, "").slice(0, 60)}
                   </a>

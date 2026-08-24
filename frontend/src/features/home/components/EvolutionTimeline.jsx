@@ -165,7 +165,7 @@ export default function EvolutionTimeline() {
                     </h3>
                     <p className="mt-2 text-sm leading-6 text-text-muted">{m.note}</p>
                     <div
-                      className="mt-4 rounded-xl border border-white/5 bg-black/25 px-4 py-3 text-base leading-7 text-white/90"
+                      className="mt-4 overflow-x-auto rounded-xl border border-white/5 bg-black/25 px-4 py-3 text-base leading-7 text-white/90"
                       style={{
                         // STIX Two Math / Cambria Math are intentional serif math
                         // fonts for the formula block — not in tailwind.config

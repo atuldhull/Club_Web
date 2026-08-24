@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { mainNavigation } from "@/app/navigation";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import BrandMark from "@/components/navigation/BrandMark";
 import InstallPwaButton from "@/components/ui/InstallPwaButton";
 import CommandPalette from "@/components/search/CommandPalette";
@@ -28,7 +29,28 @@ export default function MainLayout() {
   const role = user?.role;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  // Account dropdown — click-toggled (touch devices ≥md have no hover),
+  // with hover-open kept as a convenience on pointer devices.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   useCommandPaletteHotkey(paletteOpen, setPaletteOpen);
+
+  // Close the account dropdown on outside click / Escape.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onPointerDown = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   // Logout: wait for backend to clear session, THEN navigate with replace
   // so the back button cannot re-expose protected pages.
@@ -70,6 +92,7 @@ export default function MainLayout() {
           the design. Internal padding (px-4/sm:px-8/lg:px-10) keeps
           contents readable from ultra-wide displays down to mobile. */}
       <div className="relative flex min-h-screen w-full flex-col">
+        <AnnouncementBar />
         <motion.header
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -206,14 +229,26 @@ export default function MainLayout() {
                         the bell + hamburger combo handles navigation
                         via the mobile drawer, where Profile / Saved /
                         Sign Out all live. */}
-                    <div className="group relative hidden md:block">
-                      <button className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+                    <div ref={menuRef} className="group relative hidden md:block">
+                      <button
+                        type="button"
+                        onClick={() => setMenuOpen((v) => !v)}
+                        aria-haspopup="menu"
+                        aria-expanded={menuOpen}
+                        className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-white"
+                      >
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/30 text-[10px] font-bold">
                           {(user.name || user.email || "U")[0].toUpperCase()}
                         </span>
                         <span>{user.name?.split(" ")[0] || "User"}</span>
                       </button>
-                      <div className="invisible absolute right-0 top-full mt-2 w-48 rounded-xl border border-line/15 bg-surface/95 p-2 shadow-panel backdrop-blur-2xl transition-all group-hover:visible">
+                      <div
+                        onClick={() => setMenuOpen(false)}
+                        className={cn(
+                          "absolute right-0 top-full mt-2 w-48 rounded-xl border border-line/15 bg-surface/95 p-2 shadow-panel backdrop-blur-2xl transition-all",
+                          menuOpen ? "visible" : "invisible group-hover:visible",
+                        )}
+                      >
                         <p className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-text-dim">{role}</p>
                         <Link to="/profile" className="block rounded-lg px-3 py-2 text-sm text-text-muted transition hover:bg-white/5 hover:text-white">Profile</Link>
                         <Link to="/saved" className="block rounded-lg px-3 py-2 text-sm text-text-muted transition hover:bg-white/5 hover:text-white">Saved</Link>
@@ -286,6 +321,10 @@ export default function MainLayout() {
                         Search everything
                       </button>
                     )}
+                    {/* Install as PWA — the header instance is hidden below
+                        md:, so the drawer is the only install entry point
+                        on phones (renders nothing when not installable) */}
+                    <InstallPwaButton className="px-4 py-1" />
                     {/* Nav links */}
                     {navItems.map((item) => (
                       <NavLink
@@ -318,6 +357,7 @@ export default function MainLayout() {
                           { to: "/projects", label: "Projects" },
                           { to: "/profile", label: "Profile" },
                           { to: "/certificates", label: "Certificates" },
+                          { to: "/billing", label: "Billing" },
                           { to: "/notifications", label: "Notifications" },
                         ].map((item) => (
                           <NavLink

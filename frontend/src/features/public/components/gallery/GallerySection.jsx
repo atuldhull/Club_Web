@@ -71,7 +71,7 @@ function SectionHeader({ label, title, subtitle, variant }) {
         transition={{ delay: 0.1 }} className="mt-4 flex items-center justify-center gap-5">
         <motion.span initial={{ width: 0 }} whileInView={{ width: 80 }} viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.8 }} className="h-px" style={{ background: `linear-gradient(90deg, transparent, ${line})` }} />
-        <h2 className="font-display text-5xl font-bold tracking-tight sm:text-6xl" style={{ color: accent }}>
+        <h2 className="break-words font-display text-3xl font-bold tracking-tight sm:text-6xl" style={{ color: accent }}>
           {title}
         </h2>
         <motion.span initial={{ width: 0 }} whileInView={{ width: 80 }} viewport={{ once: true }}
@@ -128,12 +128,13 @@ export default function GallerySection({ title, subtitle, label, files, variant,
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: rowIdx * 0.06, duration: 0.6 }}
-              className="flex gap-3 sm:gap-4"
+              className="flex flex-wrap gap-3 sm:flex-nowrap sm:gap-4"
             >
               {row.map(({ file, config }, colIdx) => {
                 const idx = globalIdx++;
+                // --r drives the flex ratio only at sm+; phones wrap 2-up via basis
                 return (
-                  <div key={colIdx} className={`${config.h} overflow-hidden rounded-2xl`} style={{ flex: config.flex }}>
+                  <div key={colIdx} className={`${config.h} max-sm:h-44 basis-[calc(50%-0.375rem)] grow overflow-hidden rounded-2xl sm:[flex:var(--r)]`} style={{ "--r": config.flex }}>
                     <AnimatedCard
                       file={file}
                       index={idx}

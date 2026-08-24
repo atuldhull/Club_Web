@@ -88,7 +88,7 @@ export default function SAOrganisationsPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase ${org.status === "active" ? "bg-success/10 text-success" : "bg-danger/10 text-danger"}`}>{org.status}</span>
                 <button onClick={async () => { setStatsId(org.id); setStatsData(null); try { const { data } = await superAdmin.orgStats(org.id); setStatsData(data); } catch { setStatsData({ error: true }); } }}
-                  className="rounded-lg bg-white/5 px-2.5 py-1 font-mono text-[10px] text-text-muted hover:text-white transition">Stats</button>
+                  className="rounded-lg bg-white/5 px-3 py-2 font-mono text-[10px] text-text-muted hover:text-white transition sm:px-2.5 sm:py-1">Stats</button>
                 {org.status === "active" ? (
                   <button
                     onClick={async () => {
@@ -97,7 +97,7 @@ export default function SAOrganisationsPage() {
                       catch (err) { showMsg(err.response?.data?.error || "Suspend failed"); return; }
                       fetchOrgs();
                     }}
-                    className="rounded-lg bg-warning/10 px-2.5 py-1 font-mono text-[10px] text-warning">Suspend</button>
+                    className="rounded-lg bg-warning/10 px-3 py-2 font-mono text-[10px] text-warning sm:px-2.5 sm:py-1">Suspend</button>
                 ) : (
                   <button
                     onClick={async () => {
@@ -105,7 +105,7 @@ export default function SAOrganisationsPage() {
                       catch (err) { showMsg(err.response?.data?.error || "Activate failed"); return; }
                       fetchOrgs();
                     }}
-                    className="rounded-lg bg-success/10 px-2.5 py-1 font-mono text-[10px] text-success">Activate</button>
+                    className="rounded-lg bg-success/10 px-3 py-2 font-mono text-[10px] text-success sm:px-2.5 sm:py-1">Activate</button>
                 )}
                 <button
                   onClick={async () => {
@@ -114,7 +114,7 @@ export default function SAOrganisationsPage() {
                     catch (err) { showMsg(err.response?.data?.error || "Delete failed"); return; }
                     fetchOrgs();
                   }}
-                  className="rounded-lg bg-danger/10 px-2.5 py-1 font-mono text-[10px] text-danger">Delete</button>
+                  className="rounded-lg bg-danger/10 px-3 py-2 font-mono text-[10px] text-danger sm:px-2.5 sm:py-1">Delete</button>
               </div>
             </div>
           </Card>
@@ -124,8 +124,8 @@ export default function SAOrganisationsPage() {
       {/* Stats modal */}
       <AnimatePresence>
         {statsId && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setStatsId(null)}>
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="w-full max-w-md rounded-2xl border border-line/15 bg-surface/95 p-6 shadow-panel backdrop-blur-2xl" onClick={(e) => e.stopPropagation()}>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" onClick={() => setStatsId(null)}>
+            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-line/15 bg-surface/95 p-6 shadow-panel backdrop-blur-2xl" onClick={(e) => e.stopPropagation()}>
               <h3 className="font-display text-lg font-bold text-white">Org Stats</h3>
               {!statsData ? <div className="py-6"><Loader variant="orbit" size="md" /></div> : statsData.error ? <p className="py-4 text-danger">Failed</p> : (
                 <div className="mt-4 grid grid-cols-2 gap-3">

@@ -145,7 +145,7 @@ export default function AdminFeaturesPage() {
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-medium text-white">{featureDef.label}</p>
                             {!inPlan && (
-                              <span className="rounded-full bg-warning/10 px-1.5 py-0.5 font-mono text-[7px] uppercase text-warning">
+                              <span className="rounded-full bg-warning/10 px-1.5 py-0.5 font-mono text-[9px] uppercase text-warning">
                                 Upgrade Required
                               </span>
                             )}

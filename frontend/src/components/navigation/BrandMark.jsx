@@ -9,7 +9,7 @@ export default function BrandMark({ to = "/", compact = false, className }) {
     <Link
       to={to}
       className={cn(
-        "inline-flex items-center gap-3 text-left",
+        "inline-flex min-w-0 items-center gap-3 text-left",
         compact ? "gap-2.5" : "gap-3.5",
         className,
       )}
@@ -34,8 +34,8 @@ export default function BrandMark({ to = "/", compact = false, className }) {
           can stay on one line next to the avatar without competing
           with the header's action row for horizontal space. Subtitle
           only shows from md: (768px) up, where there's actual room. */}
-      <span className="flex flex-col">
-        <span className="whitespace-nowrap font-display text-base font-bold tracking-[-0.06em] text-white sm:text-lg">
+      <span className="flex min-w-0 flex-col">
+        <span className="truncate font-display text-base font-bold tracking-[-0.06em] text-white sm:text-lg">
           Math Collective
         </span>
         <span className="hidden whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.28em] text-text-muted md:inline">

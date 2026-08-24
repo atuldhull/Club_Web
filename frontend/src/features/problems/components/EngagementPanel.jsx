@@ -361,7 +361,7 @@ function WriteupCard({ w, onVote }) {
           href={w.repo_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-primary hover:underline"
+          className="mt-3 inline-flex items-center gap-1.5 break-all font-mono text-[11px] text-primary hover:underline"
         >
           ↗ {w.repo_url.replace(/^https?:\/\//, "").slice(0, 60)}
         </a>
@@ -434,7 +434,7 @@ function Prose({ text }) {
   if (!text) return null;
   const paragraphs = String(text).split(/\n\n+/).filter(Boolean);
   return (
-    <div className="mt-2 space-y-2 text-sm leading-7 text-text-soft">
+    <div className="mt-2 space-y-2 break-words text-sm leading-7 text-text-soft">
       {paragraphs.map((para, i) => (
         <p key={i} className="whitespace-pre-wrap">{para}</p>
       ))}

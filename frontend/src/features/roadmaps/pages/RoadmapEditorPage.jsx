@@ -464,7 +464,7 @@ function StepEditor({ step, index, isFirst, isLast, readOnly, onUpdate, onDelete
             {step.description && <p className="mt-1 text-xs leading-5 text-text-soft line-clamp-2">{step.description}</p>}
             <div className="mt-1.5 flex flex-wrap gap-2 font-mono text-[10px] text-text-dim">
               {step.problem && <span className="text-primary">Problem · {step.problem.title?.slice(0, 30)}</span>}
-              {step.resource_url && <span>↗ {step.resource_label || step.resource_url}</span>}
+              {step.resource_url && <span className="max-w-full truncate">↗ {step.resource_label || step.resource_url}</span>}
               {step.est_minutes ? <span>~{step.est_minutes}m</span> : null}
             </div>
           </div>

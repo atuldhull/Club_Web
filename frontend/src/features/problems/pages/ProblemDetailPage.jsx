@@ -267,7 +267,7 @@ function Prose({ text }) {
   if (!text) return null;
   const paragraphs = String(text).split(/\n\n+/).filter(Boolean);
   return (
-    <div className="space-y-3 text-sm leading-7 text-text-soft">
+    <div className="space-y-3 break-words text-sm leading-7 text-text-soft">
       {paragraphs.map((para, i) => (
         <p key={i}>{para}</p>
       ))}

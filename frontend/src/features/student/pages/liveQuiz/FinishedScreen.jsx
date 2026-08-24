@@ -35,14 +35,14 @@ export default function FinishedScreen({ leaderboard, playerName, onLeave }) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mx-auto flex max-w-lg items-end justify-center gap-3"
+            className="mx-auto flex max-w-lg items-end justify-center gap-2 sm:gap-3"
           >
             {/* 2nd place */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex w-28 flex-col items-center"
+              className="flex w-24 flex-col items-center sm:w-28"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-line/20 bg-white/5 text-lg font-bold text-text-muted">
                 {leaderboard[1].name.charAt(0).toUpperCase()}
@@ -59,7 +59,7 @@ export default function FinishedScreen({ leaderboard, playerName, onLeave }) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="flex w-32 flex-col items-center"
+              className="flex w-28 flex-col items-center sm:w-32"
             >
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-warning/40 bg-warning/15 text-2xl font-bold text-warning shadow-orbit">
                 {leaderboard[0].name.charAt(0).toUpperCase()}
@@ -76,7 +76,7 @@ export default function FinishedScreen({ leaderboard, playerName, onLeave }) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex w-28 flex-col items-center"
+              className="flex w-24 flex-col items-center sm:w-28"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#cd7f32]/20 bg-[#cd7f32]/10 text-lg font-bold text-[#cd7f32]">
                 {leaderboard[2].name.charAt(0).toUpperCase()}

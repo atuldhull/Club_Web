@@ -48,13 +48,13 @@ export default function RestoreIdentityModal({ open, onClose }) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/70 backdrop-blur-md px-4"
+        className="fixed inset-0 z-[9998] flex items-center justify-center overflow-y-auto bg-black/70 backdrop-blur-md px-4 py-6"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       >
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="w-full max-w-md rounded-2xl border border-line/20 bg-panel/95 p-6 shadow-2xl"
+          className="max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-line/20 bg-panel/95 p-6 shadow-2xl"
         >
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary">
             Restore identity

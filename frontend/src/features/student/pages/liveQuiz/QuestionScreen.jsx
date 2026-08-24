@@ -114,10 +114,12 @@ export default function QuestionScreen({
               {/* MathRender so questions authored with $...$ / $$...$$
                   delimiters render as actual maths instead of raw LaTeX
                   source. Plain-text questions pass through unchanged. */}
-              <MathRender
-                source={String(question.question || "")}
-                className="mt-3 font-display text-xl font-bold leading-8 text-white sm:text-2xl [&_.katex]:text-white"
-              />
+              <div className="overflow-x-auto">
+                <MathRender
+                  source={String(question.question || "")}
+                  className="mt-3 font-display text-xl font-bold leading-8 text-white sm:text-2xl [&_.katex]:text-white"
+                />
+              </div>
 
               {/* Options */}
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -153,7 +155,7 @@ export default function QuestionScreen({
                         </span>
                         <MathRender
                           source={String(typeof option === "string" ? option : (option.text || option.label || ""))}
-                          className={`text-sm font-medium ${isSelected ? "text-white [&_.katex]:text-white" : "text-text-muted [&_.katex]:text-text-muted"}`}
+                          className={`min-w-0 overflow-x-auto text-sm font-medium ${isSelected ? "text-white [&_.katex]:text-white" : "text-text-muted [&_.katex]:text-text-muted"}`}
                         />
                       </div>
                       {isSelected && answerSubmitted && (

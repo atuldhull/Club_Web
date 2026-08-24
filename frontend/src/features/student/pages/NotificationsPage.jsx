@@ -333,17 +333,17 @@ export default function NotificationsPage() {
               <h3 className="mt-2 font-display text-lg font-bold text-white">{pendingRequests.length} Pending</h3>
               <div className="mt-4 space-y-3">
                 {pendingRequests.map((req) => (
-                  <div key={req.id} className="flex items-center justify-between gap-3 rounded-xl border border-line/15 bg-white/[0.03] px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-lg">
+                  <div key={req.id} className="flex flex-col gap-3 rounded-xl border border-line/15 bg-white/[0.03] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-lg">
                         {req.avatar_emoji || "👤"}
                       </span>
-                      <div>
-                        <p className="text-sm font-medium text-white">{req.name || "Unknown"}</p>
-                        <p className="font-mono text-[10px] text-text-dim">{req.email || ""}</p>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-white">{req.name || "Unknown"}</p>
+                        <p className="truncate font-mono text-[10px] text-text-dim">{req.email || ""}</p>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex shrink-0 gap-2">
                       <Button size="sm" onClick={() => handleAcceptFriend(req.id, req.user_id || req.requester_id)}>
                         Accept
                       </Button>
@@ -478,7 +478,7 @@ export default function NotificationsPage() {
                                   e.stopPropagation();
                                   handleMarkRead(id);
                                 }}
-                                className="flex-shrink-0 opacity-0 transition group-hover:opacity-100"
+                                className="flex-shrink-0 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100"
                               >
                                 Mark Read
                               </Button>

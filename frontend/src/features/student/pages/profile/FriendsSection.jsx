@@ -111,7 +111,7 @@ export default function FriendsSection() {
               <div key={req.id} className="flex items-center gap-2.5 rounded-xl border border-line/5 bg-black/10 px-3 py-2.5">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm text-white">{req.requester?.name || "User"}</p>
-                  <p className="text-[9px] text-text-dim">{req.requester?.email || ""}</p>
+                  <p className="truncate text-[10px] text-text-dim">{req.requester?.email || ""}</p>
                 </div>
                 <Button
                   size="sm"

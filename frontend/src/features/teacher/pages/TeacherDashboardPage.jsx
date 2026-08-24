@@ -285,16 +285,16 @@ export default function TeacherDashboardPage() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + i * 0.05 }}
-                    className="flex items-center justify-between rounded-xl border border-line/10 bg-black/10 px-4 py-3 transition hover:bg-white/[0.02]"
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line/10 bg-black/10 px-4 py-3 transition hover:bg-white/[0.02]"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex min-w-0 items-center gap-3">
                       <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
                         <span className="font-mono text-sm font-bold text-primary">
                           {item.studentName?.charAt(0)?.toUpperCase() || "?"}
                         </span>
                       </span>
-                      <div>
-                        <p className="text-sm font-medium text-white">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-white">
                           {item.studentName || "Unknown Student"}
                         </p>
                         <p className="font-mono text-[10px] text-text-dim">
@@ -317,9 +317,22 @@ export default function TeacherDashboardPage() {
                         </span>
                       )}
                       <span className="font-mono text-[10px] text-text-dim whitespace-nowrap">
-                        {item.time || item.createdAt
-                          ? new Date(item.time || item.createdAt).toLocaleString()
-                          : ""}
+                        {item.time || item.createdAt ? (
+                          <>
+                            {/* Full timestamp is ~150px and can't shrink — show time only on phones */}
+                            <span className="hidden sm:inline">
+                              {new Date(item.time || item.createdAt).toLocaleString()}
+                            </span>
+                            <span className="sm:hidden">
+                              {new Date(item.time || item.createdAt).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </span>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </span>
                     </div>
                   </motion.div>

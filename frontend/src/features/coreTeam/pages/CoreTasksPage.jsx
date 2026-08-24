@@ -146,7 +146,7 @@ export default function CoreTasksPage() {
                     </div>
                     <h3 className="mt-2 font-display text-lg font-semibold text-white">{t.title}</h3>
                     {t.description && (
-                      <p className="mt-1 text-sm leading-6 text-text-muted">{t.description}</p>
+                      <p className="mt-1 break-words text-sm leading-6 text-text-muted">{t.description}</p>
                     )}
                     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] text-text-dim">
                       {t.claimer && <span>Claimed by {t.claimer.name}</span>}
@@ -157,7 +157,7 @@ export default function CoreTasksPage() {
                       )}
                     </div>
                     {t.submission && (
-                      <p className="mt-2 rounded-lg border border-line/10 bg-black/20 px-3 py-2 text-xs text-text-muted">
+                      <p className="mt-2 break-words rounded-lg border border-line/10 bg-black/20 px-3 py-2 text-xs text-text-muted">
                         <span className="text-text-dim">Submission: </span>{t.submission}
                       </p>
                     )}
@@ -260,7 +260,7 @@ function NewTaskModal({ member, teams, onClose, onCreated }) {
           <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
             rows={3} className={INPUT_CLS} placeholder="Context, links, expectations…" />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Points">
             <input type="number" min={1} max={500} value={form.points}
               onChange={(e) => setForm({ ...form, points: e.target.value })} className={INPUT_CLS} />

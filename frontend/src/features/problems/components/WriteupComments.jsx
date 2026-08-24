@@ -117,7 +117,7 @@ export default function WriteupComments({ writeupId, initialCount = 0 }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-text-muted transition hover:text-white"
+        className="-my-1 flex items-center gap-2 py-2 font-mono text-[11px] uppercase tracking-wider text-text-muted transition hover:text-white"
         aria-expanded={open}
       >
         <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -288,7 +288,7 @@ function CommentRow({ c, onDelete, onEdit }) {
           </div>
         </form>
       ) : (
-        <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-text-soft">{c.body}</p>
+        <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-text-soft">{c.body}</p>
       )}
     </div>
   );
