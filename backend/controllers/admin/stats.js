@@ -18,13 +18,16 @@ import { catchAsync } from "../../lib/asyncHandler.js";
    GET /api/admin/stats
 ═══════════════════════════════════════════ */
 export const getAdminStats = catchAsync(async (req, res) => {
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const [
     { count: totalStudents },
+    { count: newStudentsThisWeek },
     { count: totalChallenges },
     { count: totalAttempts },
     { count: totalEvents },
   ] = await Promise.all([
     req.db.from("students")      .select("*", { count: "exact", head: true }),
+    req.db.from("students")      .select("*", { count: "exact", head: true }).gte("created_at", weekAgo),
     req.db.from("challenges")    .select("*", { count: "exact", head: true }),
     req.db.from("arena_attempts").select("*", { count: "exact", head: true }),
     req.db.from("events")        .select("*", { count: "exact", head: true }),
@@ -44,6 +47,7 @@ export const getAdminStats = catchAsync(async (req, res) => {
 
   return res.json({
     totalStudents:   totalStudents   || 0,
+    newStudentsThisWeek: newStudentsThisWeek || 0,
     totalChallenges: totalChallenges || 0,
     totalAttempts:   totalAttempts   || 0,
     totalEvents:     totalEvents     || 0,

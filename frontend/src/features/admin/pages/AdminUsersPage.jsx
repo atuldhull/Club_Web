@@ -9,7 +9,7 @@ import MonumentBackground from "@/components/backgrounds/MonumentBackground";
 import { useMonument } from "@/hooks/useMonument";
 
 function exportUsersCSV(users) {
-  const header = "name,email,role,xp,status";
+  const header = "name,email,role,xp,status,joined";
   const escapeField = (val) => {
     const str = String(val ?? "");
     if (str.includes(",") || str.includes('"') || str.includes("\n")) {
@@ -24,6 +24,7 @@ function exportUsersCSV(users) {
       escapeField(u.role || "student"),
       u.xp ?? 0,
       u.is_active !== false ? "active" : "inactive",
+      u.created_at ? u.created_at.slice(0, 10) : "",
     ].join(",")
   );
   const csv = [header, ...rows].join("\n");
@@ -37,6 +38,12 @@ function exportUsersCSV(users) {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+
+// "New" badge window for the Joined column.
+const NEW_MEMBER_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const isNewMember = (createdAt) => !!createdAt && Date.now() - new Date(createdAt).getTime() < NEW_MEMBER_WINDOW_MS;
+const joinedLabel = (createdAt) =>
+  createdAt ? new Date(createdAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : "—";
 
 export default function AdminUsersPage() {
   useMonument("magma");
@@ -203,12 +210,13 @@ export default function AdminUsersPage() {
                   <th className="px-4 py-3">Role</th>
                   <th className="px-4 py-3">XP</th>
                   <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3">Joined</th>
                   <th className="px-4 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.length === 0 && (
-                  <tr><td colSpan="5" className="px-4 py-8 text-center text-text-dim">No users found</td></tr>
+                  <tr><td colSpan="6" className="px-4 py-8 text-center text-text-dim">No users found</td></tr>
                 )}
                 {users.map((u) => (
                   <tr key={u.id} className="border-b border-line/5 transition hover:bg-white/[0.02] hover:border-l-2 hover:border-l-[rgba(255,107,53,0.3)]">
@@ -232,6 +240,14 @@ export default function AdminUsersPage() {
                       <span className="flex items-center gap-1.5">
                         <span className={`h-2 w-2 rounded-full ${u.is_active !== false ? "bg-success" : "bg-text-dim"}`} />
                         <span className="font-mono text-[10px] text-text-dim">{u.is_active !== false ? "active" : "inactive"}</span>
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="flex items-center gap-2">
+                        <span className="whitespace-nowrap font-mono text-[10px] text-text-dim">{joinedLabel(u.created_at)}</span>
+                        {isNewMember(u.created_at) && (
+                          <span className="rounded-full border border-success/30 bg-success/15 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-success">New</span>
+                        )}
                       </span>
                     </td>
                     <td className="px-4 py-3">

@@ -53,6 +53,7 @@ export default function AdminOverviewPage() {
 
   const cards = [
     { label: "Total Students", value: stats?.totalStudents ?? 0, color: "text-primary", icon: "👥" },
+    { label: "New This Week", value: stats?.newStudentsThisWeek ?? 0, color: "text-glow", icon: "✨" },
     { label: "Active Challenges", value: stats?.totalChallenges ?? 0, color: "text-secondary", icon: "🧩" },
     { label: "Total Submissions", value: stats?.totalAttempts ?? 0, color: "text-success", icon: "📝" },
     { label: "Events Created", value: stats?.totalEvents ?? 0, color: "text-warning", icon: "📅" },
@@ -62,7 +63,7 @@ export default function AdminOverviewPage() {
     <div style={{ position: "relative" }}><MonumentBackground monument="magma" intensity={0.1} />
     <motion.div initial="hidden" animate="visible" className="space-y-6">
       {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map((c, i) => (
           <motion.div key={c.label} custom={i} variants={fadeUp}>
             <Card variant="glass" className="text-center">
