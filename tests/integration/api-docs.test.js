@@ -95,7 +95,7 @@ describe.skipIf(!HAS_SPEC)("/api/docs mount", () => {
     process.env.SESSION_SECRET = "test-secret-test-secret-test";
     const { createApp } = await import("../../backend/app.js");
     app = createApp();
-  }, 30000);
+  }, 90000);
 
   it("serves Swagger UI HTML at /api/docs/", async () => {
     const html = await request(app).get("/api/docs/").redirects(2);

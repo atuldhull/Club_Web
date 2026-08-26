@@ -85,7 +85,7 @@ describe("trust proxy", () => {
 });
 
 describe("createApp() in app.js sets trust proxy", () => {
-  // 30 s timeout (default 10 s) — under coverage instrumentation on
+  // 90 s timeout (default 10 s) — under coverage instrumentation on
   // Windows, importing app.js takes longer than the default and
   // intermittently flakes the pre-commit gate. Same root cause as
   // the api-docs.test.js timeout bump.
@@ -104,5 +104,5 @@ describe("createApp() in app.js sets trust proxy", () => {
     // Specifically `1` (not `true`/Infinity) — see comment in app.js
     // about why trusting the entire chain is wrong.
     expect(app.get("trust proxy")).toBe(1);
-  }, 30000);
+  }, 90000);
 });

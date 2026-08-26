@@ -8,31 +8,11 @@ import { admin } from "@/lib/api";
 import MonumentBackground from "@/components/backgrounds/MonumentBackground";
 import { useMonument } from "@/hooks/useMonument";
 
-function exportUsersCSV(users) {
-  const header = "name,email,role,xp,status,joined";
-  const escapeField = (val) => {
-    const str = String(val ?? "");
-    if (str.includes(",") || str.includes('"') || str.includes("\n")) {
-      return `"${str.replace(/"/g, '""')}"`;
-    }
-    return str;
-  };
-  const rows = users.map((u) =>
-    [
-      escapeField(u.name || ""),
-      escapeField(u.email || ""),
-      escapeField(u.role || "student"),
-      u.xp ?? 0,
-      u.is_active !== false ? "active" : "inactive",
-      u.created_at ? u.created_at.slice(0, 10) : "",
-    ].join(",")
-  );
-  const csv = [header, ...rows].join("\n");
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+function downloadCsv(blob, filename) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.setAttribute("download", `users_export_${new Date().toISOString().slice(0, 10)}.csv`);
+  link.setAttribute("download", filename);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -123,10 +103,11 @@ export default function AdminUsersPage() {
   const handleExportCSV = useCallback(async () => {
     try {
       setExporting(true);
-      const res = await admin.users(1, 1000);
-      const allUsers = res.data?.users || (Array.isArray(res.data) ? res.data : []);
-      exportUsersCSV(allUsers);
-      showMsg("CSV exported successfully");
+      // The server builds the file from the FULL roster — the list endpoint
+      // is capped at 100 per page, which used to truncate this export.
+      const res = await admin.exportUsers();
+      downloadCsv(res.data, `users_export_${new Date().toISOString().slice(0, 10)}.csv`);
+      showMsg("CSV exported — full member list");
     } catch (err) {
       showMsg(err.response?.data?.error || "Failed to export CSV");
     } finally {

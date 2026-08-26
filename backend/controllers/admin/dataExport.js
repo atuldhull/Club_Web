@@ -20,6 +20,7 @@ import archiver from "archiver";
 import supabase from "../../config/supabase.js";
 import { logger } from "../../config/logger.js";
 import { sendInternalError } from "../../lib/errorResponse.js";
+import { toCsv, fetchAll, CSV_BOM } from "../../lib/exportHelpers.js";
 
 /* ═══════════════════════════════════════════════════════════════
    EXPORT ALL DATA — ZIP with CSV files
@@ -39,22 +40,14 @@ import { sendInternalError } from "../../lib/errorResponse.js";
      friendships.csv        — all friend connections
 ═══════════════════════════════════════════════════════════════ */
 
-function toCsv(rows) {
-  if (!rows || rows.length === 0) return "";
-  const headers = Object.keys(rows[0]);
-  const escape = (v) => {
-    if (v === null || v === undefined) return "";
-    const s = String(v);
-    if (s.includes(",") || s.includes('"') || s.includes("\n")) {
-      return '"' + s.replace(/"/g, '""') + '"';
-    }
-    return s;
-  };
-  return [
-    headers.join(","),
-    ...rows.map(row => headers.map(h => escape(row[h])).join(","))
-  ].join("\n");
-}
+// Every query goes through fetchAll: a bare .select() is silently capped at
+// 1000 rows by PostgREST, which truncated big tables (attempts,
+// notifications) without any error. Each carries a deterministic order so
+// pages don't overlap.
+const csvFile = (name, rows) => {
+  const csv = toCsv(rows);
+  return { name, data: csv ? CSV_BOM + csv : "" };
+};
 
 export const exportAllData = async (req, res) => {
   try {
@@ -66,35 +59,35 @@ export const exportAllData = async (req, res) => {
       notifications, friendships,
     ] = await Promise.all([
       // ── tenant tables (scoped via req.db; the Proxy filters to req.orgId) ──
-      req.db.from("students").select("user_id, name, email, role, xp, weekly_xp, title, department, subject, bio, created_at").then(r => r.data || []),
-      req.db.from("challenges").select("id, title, difficulty, points, is_active, created_at").then(r => r.data || []),
-      req.db.from("arena_attempts").select("user_id, challenge_id, selected_index, correct, xp_earned, created_at").then(r => r.data || []),
-      req.db.from("events").select("id, title, event_type, date, starts_at, ends_at, location, organiser, capacity, xp_reward, registration_open, is_active, created_at").then(r => r.data || []),
+      fetchAll(() => req.db.from("students").select("user_id, name, email, role, xp, weekly_xp, title, department, subject, bio, created_at").order("created_at").order("user_id")),
+      fetchAll(() => req.db.from("challenges").select("id, title, difficulty, points, is_active, created_at").order("id")),
+      fetchAll(() => req.db.from("arena_attempts").select("user_id, challenge_id, selected_index, correct, xp_earned, created_at").order("created_at").order("user_id")),
+      fetchAll(() => req.db.from("events").select("id, title, event_type, date, starts_at, ends_at, location, organiser, capacity, xp_reward, registration_open, is_active, created_at").order("id")),
       // ── non-tenant tables (see header comment re: the cross-org gap they leave) ──
-      supabase.from("event_registrations").select("id, event_id, user_id, status, registered_at, cancelled_at, checked_in_at, team_name").then(r => r.data || []).catch(() => []),
-      supabase.from("event_attendance").select("id, event_id, user_id, checkin_method, checkin_time, xp_awarded, session_label").then(r => r.data || []).catch(() => []),
-      supabase.from("event_leaderboard").select("id, event_id, user_id, score, rank, team_name, judged_at").then(r => r.data || []).catch(() => []),
-      supabase.from("achievements").select("id, slug, title, category, criteria_type, criteria_value, xp_reward, rarity").then(r => r.data || []).catch(() => []),
-      supabase.from("user_achievements").select("id, user_id, achievement_id, event_id, unlocked_at, xp_awarded").then(r => r.data || []).catch(() => []),
+      fetchAll(() => supabase.from("event_registrations").select("id, event_id, user_id, status, registered_at, cancelled_at, checked_in_at, team_name").order("id")).catch(() => []),
+      fetchAll(() => supabase.from("event_attendance").select("id, event_id, user_id, checkin_method, checkin_time, xp_awarded, session_label").order("id")).catch(() => []),
+      fetchAll(() => supabase.from("event_leaderboard").select("id, event_id, user_id, score, rank, team_name, judged_at").order("id")).catch(() => []),
+      fetchAll(() => supabase.from("achievements").select("id, slug, title, category, criteria_type, criteria_value, xp_reward, rarity").order("id")).catch(() => []),
+      fetchAll(() => supabase.from("user_achievements").select("id, user_id, achievement_id, event_id, unlocked_at, xp_awarded").order("id")).catch(() => []),
       // notifications IS tenant — kept in its original slot (slot 10) so the
       // destructuring above still aligns; the req.db scoping is what matters.
-      req.db.from("notifications").select("id, user_id, title, body, type, is_read, link, created_at").then(r => r.data || []).catch(() => []),
-      supabase.from("friendships").select("id, requester_id, recipient_id, status, created_at").then(r => r.data || []).catch(() => []),
+      fetchAll(() => req.db.from("notifications").select("id, user_id, title, body, type, is_read, link, created_at").order("id")).catch(() => []),
+      fetchAll(() => supabase.from("friendships").select("id, requester_id, recipient_id, status, created_at").order("id")).catch(() => []),
     ]);
 
     // Build CSV files
     const files = [
-      { name: "students.csv", data: toCsv(students) },
-      { name: "challenges.csv", data: toCsv(challenges) },
-      { name: "arena_attempts.csv", data: toCsv(attempts) },
-      { name: "events.csv", data: toCsv(events) },
-      { name: "event_registrations.csv", data: toCsv(registrations) },
-      { name: "event_attendance.csv", data: toCsv(attendance) },
-      { name: "event_leaderboard.csv", data: toCsv(leaderboard) },
-      { name: "achievements.csv", data: toCsv(achievementsDef) },
-      { name: "user_achievements.csv", data: toCsv(userAchievements) },
-      { name: "notifications.csv", data: toCsv(notifications) },
-      { name: "friendships.csv", data: toCsv(friendships) },
+      csvFile("students.csv", students),
+      csvFile("challenges.csv", challenges),
+      csvFile("arena_attempts.csv", attempts),
+      csvFile("events.csv", events),
+      csvFile("event_registrations.csv", registrations),
+      csvFile("event_attendance.csv", attendance),
+      csvFile("event_leaderboard.csv", leaderboard),
+      csvFile("achievements.csv", achievementsDef),
+      csvFile("user_achievements.csv", userAchievements),
+      csvFile("notifications.csv", notifications),
+      csvFile("friendships.csv", friendships),
     ];
 
     // Stream ZIP response
@@ -129,7 +122,7 @@ export const exportAllData = async (req, res) => {
   } catch (err) {
     logger.error({ err: err }, "Export");
     if (!res.headersSent) {
-      return res.status(500).json({ error: "Export failed: " + err.message });
+      return sendInternalError(res, err, "data export");
     }
   }
 };

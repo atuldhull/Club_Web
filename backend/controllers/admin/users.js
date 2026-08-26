@@ -1,5 +1,6 @@
 import supabase from "../../config/supabase.js";
 import { logger } from "../../config/logger.js";
+import { toCsv, fetchAll, CSV_BOM } from "../../lib/exportHelpers.js";
 
 /* ═══════════════════════════════════════════
    USERS — Get all students
@@ -13,7 +14,7 @@ export const getAllUsers = async (req, res) => {
 
     const { data, count, error } = await req.db
       .from("students")
-      .select("id, user_id, name, email, xp, title, role, department, subject, created_at", { count: "exact" })
+      .select("id, user_id, name, email, xp, title, role, department, subject, is_active, created_at", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(from, from + limit - 1);
 
@@ -40,6 +41,43 @@ export const getAllUsers = async (req, res) => {
   } catch (err) {
     logger.error({ err }, "getAllUsers");
     return res.status(500).json({ error: "Failed to fetch users" });
+  }
+};
+
+/* ═══════════════════════════════════════════
+   USERS — Export the whole roster as CSV
+   GET /api/admin/users/export
+   Built server-side via fetchAll so it is never cut off by the list
+   endpoint's 100-per-page cap or PostgREST's 1000-row cap.
+═══════════════════════════════════════════ */
+export const exportUsers = async (req, res) => {
+  try {
+    const rows = await fetchAll(() =>
+      req.db
+        .from("students")
+        .select("user_id, name, email, role, title, department, subject, xp, weekly_xp, is_active, created_at")
+        .order("created_at", { ascending: false })
+        .order("user_id", { ascending: true }),
+    );
+    const csv = toCsv(rows, [
+      "name",
+      "email",
+      { key: "role", label: "role", value: (r) => r.role || "student" },
+      "title",
+      "department",
+      "subject",
+      { key: "xp", label: "xp", value: (r) => r.xp ?? 0 },
+      { key: "weekly_xp", label: "weekly_xp", value: (r) => r.weekly_xp ?? 0 },
+      { key: "status", label: "status", value: (r) => (r.is_active === false ? "inactive" : "active") },
+      { key: "joined", label: "joined", value: (r) => (r.created_at ? String(r.created_at).slice(0, 10) : "") },
+      "user_id",
+    ]);
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="users_export_${new Date().toISOString().slice(0, 10)}.csv"`);
+    return res.send(CSV_BOM + csv);
+  } catch (err) {
+    logger.error({ err, adminId: req.session?.user?.id }, "exportUsers");
+    return res.status(500).json({ error: "Failed to export users" });
   }
 };
 

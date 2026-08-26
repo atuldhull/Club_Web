@@ -115,6 +115,7 @@ export const admin = {
   stats: () => http.get("/admin/stats"),
   activeUsers: () => http.get("/admin/active-users"),
   users: (page, limit) => http.get("/admin/users", { params: { page, limit } }),
+  exportUsers: () => http.get("/admin/users/export", { responseType: "blob" }),
   createUser: (data) => http.post("/admin/users/create", data),
   deleteUser: (id) => http.delete(`/admin/users/${id}`),
   resetPassword: (id, newPassword) => http.post(`/admin/users/${id}/reset-password`, { newPassword }),

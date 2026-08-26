@@ -10,6 +10,7 @@ import {
   exportAllData,
 } from "../controllers/adminController.js";
 import { requireAdmin, checkFeatureFlag } from "../middleware/authMiddleware.js";
+import { exportUsers } from "../controllers/admin/users.js";
 import { getActiveUsers } from "../services/realtime.js";
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.get("/stats",     getAdminStats);
 
 // Users
 router.get("/users",                         getAllUsers);
+router.get("/users/export",                  exportUsers);
 router.post("/users/create",                 createUser);          // ← NEW
 router.post("/users/:userId/reset-password", resetUserPassword);
 router.patch("/users/:userId/role",          updateUserRole);

@@ -346,12 +346,22 @@ export default function AdminEventsPage() {
       const flat = { ...row };
       if (row.students) { flat.student_name = row.students.name; flat.student_email = row.students.email; }
       delete flat.students;
+      // Nested values (team members, payment details) would otherwise
+      // serialise as "[object Object]".
+      for (const k of Object.keys(flat)) {
+        if (flat[k] !== null && typeof flat[k] === "object") flat[k] = JSON.stringify(flat[k]);
+      }
       return flat;
     });
-    const headers = Object.keys(rows[0]);
-    const csv = [headers.join(","), ...rows.map(r => headers.map(h => `"${String(r[h] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `${filename}.csv`; a.click();
+    // Union of keys — later rows can carry fields the first row lacks.
+    const headers = [...new Set(rows.flatMap(r => Object.keys(r)))];
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const csv = [headers.join(","), ...rows.map(r => headers.map(h => cell(r[h])).join(","))].join("\n");
+    // BOM so Excel reads UTF-8 (avatar emojis, accented names) correctly.
+    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = `${filename}.csv`; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const filtered = filter === "all" ? eventsList
