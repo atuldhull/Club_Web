@@ -86,7 +86,7 @@
     "node-fetch": "3.3.2",
     "nodemailer": "^6.9.13",
     "nodemon": "3.1.14",
-    "pdfkit": "^0.15.0",
+    "pdfkit": "^0.19.1",
     "pino": "9.14.0",
     "postprocessing": "6.39.0",
     "qrcode": "1.5.4",
